@@ -20,6 +20,19 @@ export default function PostScreen() {
   //   .then(data => ...)
   //   .catch(error => ...);
 
+  const comments = [
+    {
+      username: 'daviddd',
+      date: 'September 20',
+      text: 'This organization is doing amazing work tackling the complex root causes of the issue.',
+    },
+    {
+      username: 'vppraggie',
+      date: 'September 21',
+      text: 'Thanks for sharing!',
+    },
+  ];
+
   return (
     <View style={styles.container}>
       <View style={styles.post}>
@@ -47,6 +60,7 @@ export default function PostScreen() {
           source={{
             uri: 'https://cdn.britannica.com/51/178051-050-3B786A55/San-Francisco.jpg',
           }}
+          alt="image attached to post: photo of San Francisco"
         />
         <View style={styles.interactions}>
           <View style={styles.likes}>
@@ -58,30 +72,20 @@ export default function PostScreen() {
       </View>
 
       <View style={styles.comments}>
-        <View style={styles.personHeader}>
-          <View style={styles.nameProfile}>
-            <ProfilePlaceholder />
-            <Text style={styles.username}>daviddd</Text>
+        {comments.map(comment => (
+          <View>
+            <View style={styles.personHeader}>
+              <View style={styles.nameProfile}>
+                <ProfilePlaceholder />
+                <Text style={styles.username}>{comment['username']}</Text>
+              </View>
+              <View style={styles.dateDiv}>
+                <Text style={styles.postDate}>{comment['date']}</Text>
+              </View>
+            </View>
+            <Text style={styles.commentText}>{comment['text']}</Text>
           </View>
-          <View style={styles.dateDiv}>
-            <Text style={styles.postDate}>September 20</Text>
-          </View>
-        </View>
-        <Text style={styles.commentText}>
-          This organization is doing amazing work tackling the complex root
-          causes of the issue.
-        </Text>
-
-        <View style={styles.personHeader}>
-          <View style={styles.nameProfile}>
-            <ProfilePlaceholder />
-            <Text style={styles.username}>vppraggie</Text>
-          </View>
-          <View style={styles.dateDiv}>
-            <Text style={styles.postDate}>September 21</Text>
-          </View>
-        </View>
-        <Text style={styles.commentText}>Thanks for sharing!</Text>
+        ))}
       </View>
     </View>
   );
