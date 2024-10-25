@@ -13,13 +13,13 @@ export const styles = StyleSheet.create({
     paddingTop: 8,
     backgroundColor: 'white',
   },
-  person_header: {
+  personHeader: {
     paddingTop: 15,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  name_profile: {
+  nameProfile: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
@@ -28,19 +28,22 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 13,
   },
-  post_date: {
+  dateDiv: {
+    paddingRight: 2,
+  },
+  postDate: {
     color: 'grey',
     fontSize: 11,
   },
-  da_text: {
+  caption: {
     paddingVertical: 15,
     fontSize: 13,
   },
-  da_link: {
+  link: {
     color: 'blue',
     textDecorationLine: 'underline',
   },
-  da_image: {
+  postImage: {
     width: '100%',
     height: undefined,
     aspectRatio: 1.5,
@@ -63,7 +66,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  c_text: {
+  commentText: {
     paddingLeft: 34,
     paddingTop: 8,
   },
