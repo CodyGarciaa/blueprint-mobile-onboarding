@@ -1,10 +1,25 @@
+import { useState } from 'react';
 import { Image, Text, View } from 'react-native';
 import HeartIcon from '../../assets/heart-icon.svg';
 import ShareIcon from '../../assets/messenger-icon.svg';
 import ProfilePlaceholder from '../../assets/profile-placeholder-icon.svg';
+import supabase from '../../supabase/client';
 import { styles } from './styles';
 
 export default function PostScreen() {
+  const [postData, setPostData] = useState({
+    description: 'description',
+    username: 'username',
+    imageURL: 'imageURL',
+    likes: 0,
+  });
+
+  // const { data, error } = await supabase.from('posts').select();
+
+  // await supabase.from('posts').select()
+  //   .then(data => ...)
+  //   .catch(error => ...);
+
   return (
     <View style={styles.container}>
       <View style={styles.post}>
@@ -31,10 +46,6 @@ export default function PostScreen() {
             uri: 'https://cdn.britannica.com/51/178051-050-3B786A55/San-Francisco.jpg',
           }}
         />
-        {/* <Text>
-          Image URL:
-          'https://cdn.britannica.com/51/178051-050-3B786A55/San-Francisco.jpg'
-        </Text> */}
         <View style={styles.interactions}>
           <View style={styles.likes}>
             <HeartIcon />

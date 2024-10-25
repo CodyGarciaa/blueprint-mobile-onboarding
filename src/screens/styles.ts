@@ -15,7 +15,6 @@ export const styles = StyleSheet.create({
   },
   person_header: {
     paddingTop: 15,
-    alignSelf: 'stretch',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -31,7 +30,6 @@ export const styles = StyleSheet.create({
   },
   post_date: {
     color: 'grey',
-    paddingRight: 2,
     fontSize: 11,
   },
   da_text: {
