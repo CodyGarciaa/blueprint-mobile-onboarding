@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { Image, Text, View } from 'react-native';
 import HeartIcon from '../../assets/heart-icon.svg';
 import ShareIcon from '../../assets/messenger-icon.svg';
