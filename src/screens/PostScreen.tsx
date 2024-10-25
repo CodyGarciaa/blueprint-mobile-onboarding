@@ -17,19 +17,23 @@ export default function PostScreen() {
   });
 
   async function fetchData() {
-    console.log('pressed');
     const { data, error } = await supabase
       .from('posts')
       .select()
       .eq('username', 'rbeggs'); //manually on got rbeggs bc og assignment only had 1 post
-    console.log('fetched');
     if (error) {
-      console.log('rip');
       throw error;
     }
 
-    const currentDate = new Date(data[0]['created_at']);
-    data[0]['created_at'] = currentDate.toDateString();
+    const date = new Date(data[0]['created_at']);
+    const options: Intl.DateTimeFormatOptions = {
+      month: 'long',
+      day: 'numeric',
+    };
+    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(
+      date,
+    );
+    data[0]['created_at'] = formattedDate;
     setPostData(data[0]);
   }
 
