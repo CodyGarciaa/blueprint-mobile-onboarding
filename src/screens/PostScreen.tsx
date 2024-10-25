@@ -1,24 +1,45 @@
-// import { useState } from 'react';
-import { Image, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Image, Pressable, Text, View } from 'react-native';
+import supabase from '@/supabase/client';
 import HeartIcon from '../../assets/heart-icon.svg';
 import ShareIcon from '../../assets/messenger-icon.svg';
 import ProfilePlaceholder from '../../assets/profile-placeholder-icon.svg';
-// import supabase from '../../supabase/client';
 import { styles } from './styles';
 
 export default function PostScreen() {
-  // const [postData, setPostData] = useState({
-  //   description: 'description',
-  //   username: 'username',
-  //   imageURL: 'imageURL',
-  //   likes: 0,
-  // });
+  const [postData, setPostData] = useState({
+    created_at: 'created_at',
+    description: 'description',
+    image_url: 'image_url',
+    like_count: 0,
+    username: 'username',
+    uuid: 'uuid',
+  });
 
-  // const { data, error } = await supabase.from('posts').select();
+  async function fetchData() {
+    const { data, error } = await supabase
+      .from('posts')
+      .select()
+      .eq('username', 'rbeggs'); //manually on got rbeggs bc og assignment only had 1 post
+    if (error) {
+      throw error;
+    }
 
-  // await supabase.from('posts').select()
-  //   .then(data => ...)
-  //   .catch(error => ...);
+    const date = new Date(data[0]['created_at']);
+    const options: Intl.DateTimeFormatOptions = {
+      month: 'long',
+      day: 'numeric',
+    };
+    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(
+      date,
+    );
+    data[0]['created_at'] = formattedDate;
+    setPostData(data[0]);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const comments = [
     {
@@ -36,36 +57,27 @@ export default function PostScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.post}>
-        <View style={styles.personHeader}>
+        <Pressable style={styles.personHeader} onPress={fetchData}>
           <View style={styles.nameProfile}>
             <ProfilePlaceholder />
-            <Text style={styles.username}>rbeggs</Text>
+            <Text style={styles.username}>{postData['username']}</Text>
           </View>
           <View style={styles.dateDiv}>
-            <Text style={styles.postDate}>September 19</Text>
+            <Text style={styles.postDate}>{postData['created_at']}</Text>
           </View>
-        </View>
-        <Text style={styles.caption}>
-          In response to the growing homelessness crisis in San Francisco, a
-          local nonprofit organization, Code Tenderloin, has launched a
-          comprehensive initiative aimed at providing long-term solutions for
-          individuals experiencing homelessness. The organization, founded in
-          2015, is dedicated to addressing both immediate needs and underlying
-          causes of homelessness through a combination of shelter services, job
-          training programs, and mental health support. read more online:
-          <Text style={styles.link}>https://www.codetenderloin.org/</Text>
-        </Text>
+        </Pressable>
+        <Text style={styles.caption}>{postData['description']}</Text>
         <Image
           style={styles.postImage}
           source={{
-            uri: 'https://cdn.britannica.com/51/178051-050-3B786A55/San-Francisco.jpg',
+            uri: postData['image_url'],
           }}
           alt="image attached to post: photo of San Francisco"
         />
         <View style={styles.interactions}>
           <View style={styles.likes}>
             <HeartIcon />
-            <Text style={styles.username}>256 Likes</Text>
+            <Text style={styles.username}>{postData['like_count']} Likes</Text>
           </View>
           <ShareIcon />
         </View>
