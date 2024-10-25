@@ -1,24 +1,28 @@
-// import { useState } from 'react';
-import { Image, Text, View } from 'react-native';
+import { useState } from 'react';
+import { Image, Pressable, Text, View } from 'react-native';
 import HeartIcon from '../../assets/heart-icon.svg';
 import ShareIcon from '../../assets/messenger-icon.svg';
 import ProfilePlaceholder from '../../assets/profile-placeholder-icon.svg';
-// import supabase from '../../supabase/client';
+import supabase from '../../supabase/client';
 import { styles } from './styles';
 
 export default function PostScreen() {
-  // const [postData, setPostData] = useState({
-  //   description: 'description',
-  //   username: 'username',
-  //   imageURL: 'imageURL',
-  //   likes: 0,
-  // });
+  const [postData, setPostData] = useState({
+    description: 'description',
+    username: 'username',
+    imageURL: 'imageURL',
+    likes: 0,
+  });
 
-  // const { data, error } = await supabase.from('posts').select();
-
-  // await supabase.from('posts').select()
-  //   .then(data => ...)
-  //   .catch(error => ...);
+  async function fetchData() {
+    const response = await supabase.from('posts').select();
+    const { data, error } = response;
+    if (error) {
+      throw error;
+    }
+    console.log(data);
+    return data;
+  }
 
   const comments = [
     {
@@ -36,7 +40,7 @@ export default function PostScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.post}>
-        <View style={styles.personHeader}>
+        <Pressable style={styles.personHeader} onPress={fetchData}>
           <View style={styles.nameProfile}>
             <ProfilePlaceholder />
             <Text style={styles.username}>rbeggs</Text>
@@ -44,7 +48,7 @@ export default function PostScreen() {
           <View style={styles.dateDiv}>
             <Text style={styles.postDate}>September 19</Text>
           </View>
-        </View>
+        </Pressable>
         <Text style={styles.caption}>
           In response to the growing homelessness crisis in San Francisco, a
           local nonprofit organization, Code Tenderloin, has launched a
